@@ -40,10 +40,13 @@ android {
 
 dependencies {
 
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+
     implementation(libs.logging.interceptor)
-    implementation( libs.androidx.lifecycle.runtime.ktx)
-    implementation( libs.retrofit)
-    implementation( libs.converter.gson)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
