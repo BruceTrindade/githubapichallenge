@@ -1,14 +1,16 @@
-package com.bruceenterprises.githubapichallenge
+package com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.RepositoriesItemBinding
+import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class RepositoryAdapter(private val repositoryList: List<Repository>) :
-    RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
+class GithubRepositoriesAdapter(private val repositoryList: List<Repository>) :
+    RecyclerView.Adapter<GithubRepositoriesAdapter.RepositoryViewHolder>() {
 
     class RepositoryViewHolder(val binding: RepositoriesItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -25,12 +27,12 @@ class RepositoryAdapter(private val repositoryList: List<Repository>) :
         val repo = repositoryList[position]
 
         holder.binding.repoName.text = repo.name
-        holder.binding.repoOwner.text = repo.owner.login
+        holder.binding.repoOwner.text = repo.ownerName
         holder.binding.repoDescription.text = repo.description
         holder.binding.starsCount.text = "Stars: ${repo.stars}"
         holder.binding.forksCount.text = "forks: ${repo.forksCount}"
         Glide.with(holder.itemView.context)
-            .load(repo.owner.avatarUrl)
+            .load(repo.ownerAvatarUrl)
             .apply(RequestOptions.circleCropTransform())
             .placeholder(R.drawable.github_repository_owner_icon)
             .error(R.drawable.github_repository_owner_icon)

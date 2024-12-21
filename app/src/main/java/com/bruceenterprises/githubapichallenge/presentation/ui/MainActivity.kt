@@ -1,4 +1,4 @@
-package com.bruceenterprises.githubapichallenge
+package com.bruceenterprises.githubapichallenge.presentation.ui
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

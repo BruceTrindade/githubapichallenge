@@ -1,21 +1,21 @@
-package com.bruceenterprises.githubapichallenge
+package com.bruceenterprises.githubapichallenge.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
 data class GitHubResponse(
-    @SerializedName("items") val items: List<Repository>
+    @SerializedName("items") val items: List<RepositoryDto>
 )
 
-data class Repository(
+data class RepositoryDto(
     val id: Long,
     val name: String,
     val description: String?,
     @SerializedName("stargazers_count") val stars: Int,
-    val owner: Owner,
+    val owner: OwnerDTO,
     @SerializedName("forks_count") val forksCount: Int,
 )
 
-data class Owner(
+data class OwnerDTO(
     val login: String,
     @SerializedName("avatar_url") val avatarUrl: String
 )

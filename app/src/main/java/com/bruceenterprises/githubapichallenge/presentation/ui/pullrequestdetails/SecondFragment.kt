@@ -1,4 +1,4 @@
-package com.bruceenterprises.githubapichallenge
+package com.bruceenterprises.githubapichallenge.presentation.ui.pullrequestdetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.FragmentSecondBinding
 
 class SecondFragment : Fragment() {
