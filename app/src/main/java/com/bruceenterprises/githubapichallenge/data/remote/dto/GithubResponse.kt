@@ -2,7 +2,7 @@ package com.bruceenterprises.githubapichallenge.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class GitHubResponse(
+data class GithubResponse(
     @SerializedName("items") val items: List<RepositoryDto>
 )
 
