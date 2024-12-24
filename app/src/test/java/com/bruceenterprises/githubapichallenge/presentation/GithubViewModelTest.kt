@@ -6,6 +6,8 @@ import com.bruceenterprises.githubapichallenge.domain.repository.GithubRepositor
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
 import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeErrorGithubRepositoriesRepository
 import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeGithubRepositoriesRepository
+import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.GithubViewModel
+import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.ResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher

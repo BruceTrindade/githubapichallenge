@@ -1,21 +1,16 @@
-package com.bruceenterprises.githubapichallenge.presentation
+package com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
+import com.bruceenterprises.githubapichallenge.utils.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed class ResultState<out T> {
-    object Loading : ResultState<Nothing>()
-    data class Success<out T>(val data: T) : ResultState<T>()
-    data class Error(val message: String) : ResultState<Nothing>()
-}
 
 @HiltViewModel
 class GithubViewModel @Inject constructor(private val getJavaRepositoriesUseCase: GetJavaRepositoriesUseCase) :
