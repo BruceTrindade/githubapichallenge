@@ -9,10 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.FragmentFirstBinding
-import com.bruceenterprises.githubapichallenge.presentation.GithubViewModel
-import com.bruceenterprises.githubapichallenge.presentation.ResultState
+import com.bruceenterprises.githubapichallenge.utils.ResultState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,9 @@ class FirstFragment : Fragment() {
 
                             }
                             is ResultState.Success -> {
-                                val adapter = GithubRepositoriesAdapter(state.data)
+                                val adapter = GithubRepositoriesAdapter(state.data) {
+                                    findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                                }
                                 binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
                                 binding.recyclerView.adapter = adapter
                             }

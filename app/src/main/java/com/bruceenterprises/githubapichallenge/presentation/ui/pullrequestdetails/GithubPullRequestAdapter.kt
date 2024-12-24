@@ -1,4 +1,4 @@
-package com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList
+package com.bruceenterprises.githubapichallenge.presentation.ui.pullrequestdetails
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,15 +6,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.RepositoriesItemBinding
+import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
+import com.bruceenterprises.githubapichallenge.utils.formatToBrazilianDate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class GithubRepositoriesAdapter(
-    private val repositoryList: List<Repository>,
+class GithubPullRequestAdapter(
+    private val pullRequestList: List<PullRequest>,
     private val onClick: () -> Unit
 ) :
-    RecyclerView.Adapter<GithubRepositoriesAdapter.RepositoryViewHolder>() {
+    RecyclerView.Adapter<GithubPullRequestAdapter.RepositoryViewHolder>() {
 
     class RepositoryViewHolder(val binding: RepositoriesItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -29,16 +31,15 @@ class GithubRepositoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
-        val repo = repositoryList[position]
+        val repo = pullRequestList[position]
 
         with(holder.binding) {
-            repoName.text = repo.name
-            repoOwner.text = repo.ownerName
-            repoDescription.text = repo.description
-            starsCount.text = "Stars: ${repo.stars}"
-            forksCount.text = "forks: ${repo.forksCount}"
+            repoName.text = repo.title
+            repoOwner.text = repo.authorName
+            repoDescription.text = repo.body
+            starsCount.text = repo.createdAt.formatToBrazilianDate()
             Glide.with(holder.itemView.context)
-                .load(repo.ownerAvatarUrl)
+                .load(repo.authorAvatarUrl)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.drawable.github_repository_owner_icon)
                 .error(R.drawable.github_repository_owner_icon)
@@ -50,6 +51,6 @@ class GithubRepositoriesAdapter(
     }
 
     override fun getItemCount(): Int {
-        return repositoryList.size
+        return pullRequestList.size
     }
 }

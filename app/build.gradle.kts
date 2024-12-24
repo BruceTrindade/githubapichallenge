@@ -53,6 +53,8 @@ android {
 
 dependencies {
 
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
     // hilt
     implementation("com.google.dagger:hilt-android:2.47")
     implementation(libs.androidx.espresso.contrib)
