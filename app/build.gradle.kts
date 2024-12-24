@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -51,6 +53,33 @@ android {
 
 dependencies {
 
+    // hilt
+    implementation("com.google.dagger:hilt-android:2.47")
+    implementation(libs.androidx.espresso.contrib)
+    kapt("com.google.dagger:hilt-compiler:2.47")
+
+    // For Robolectric tests.
+    testImplementation("com.google.dagger:hilt-android-testing:2.47")
+    // ...with Kotlin.
+    kaptTest("com.google.dagger:hilt-android-compiler:2.47")
+    // ...with Java.
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.47")
+
+
+    // For instrumented tests.
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.47")
+    // ...with Kotlin.
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.47")
+    // ...with Java.
+    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.47")
+
+
+    // Hilt Testing para testes de UI (instrumentados)
+    androidTestImplementation("androidx.hilt:hilt-testing:1.0.0")
+
+    // Hilt para testes
+
+
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
@@ -78,5 +107,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+}
 
+kapt {
+    correctErrorTypes = true
 }

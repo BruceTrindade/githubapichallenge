@@ -1,4 +1,4 @@
-package com.bruceenterprises.githubapichallenge.core.utils
+package com.bruceenterprises.githubapichallenge.core.utils.mock
 
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubRepositoriesRepository
@@ -21,7 +21,7 @@ class FakeGithubRepositoriesRepository : GithubRepositoriesRepository {
                 description = "Descrição teste 2",
                 stars = 100,
                 forksCount = 50,
-                ownerName = " name 2",
+                ownerName = "name 2",
                 ownerAvatarUrl = "https://avatar.url/2.png",
             ),
         )

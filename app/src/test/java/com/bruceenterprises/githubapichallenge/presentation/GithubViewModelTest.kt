@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubRepositoriesRepository
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
-import com.bruceenterprises.githubapichallenge.core.utils.FakeErrorGithubRepositoriesRepository
-import com.bruceenterprises.githubapichallenge.core.utils.FakeGithubRepositoriesRepository
+import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeErrorGithubRepositoriesRepository
+import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeGithubRepositoriesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -28,7 +28,9 @@ class GithubViewModelTest {
 
     private fun launch(repository: GithubRepositoriesRepository): GithubViewModel {
         val useCase = GetJavaRepositoriesUseCase(repository)
-        return GithubViewModel((useCase))
+        val viewmodel = GithubViewModel((useCase))
+        viewmodel.fetchRepositories()
+        return viewmodel
     }
 
     @Before
@@ -43,20 +45,51 @@ class GithubViewModelTest {
     }
 
     @Test
-    fun `test fetching repositories updates repositories list`() = runTest {
-        val repository = FakeGithubRepositoriesRepository()
-        val repo = launch(repository).repositories.value
+    fun `test fetching repositories with loading return loading state`() = runTest {
+        val useCase = GetJavaRepositoriesUseCase(FakeGithubRepositoriesRepository())
+        val viewmodel = GithubViewModel((useCase))
 
-        assertEquals(2, repo.size)
-        assertEquals("Repo 1", repo[0].name)
-        assertEquals("Repo 2", repo[1].name)
+        val state = viewmodel.repositories.value
+
+        assertEquals(ResultState.Loading, state)
     }
 
     @Test
-    fun `test fetching repositories with error return repositories list empty`() {
-        val repository = FakeErrorGithubRepositoriesRepository()
+    fun `test fetching repositories Success state updates repositories list`() = runTest {
+        val repository = FakeGithubRepositoriesRepository()
         val repo = launch(repository).repositories.value
 
-        assertEquals(emptyList<Repository>(), repo)
+        assertEquals(
+            ResultState.Success(
+                listOf(
+                    Repository(
+                        id = 1,
+                        name = "Repo 1",
+                        description = "Descrição teste 1",
+                        stars = 100,
+                        ownerName = "name 1",
+                        ownerAvatarUrl = "https://avatar.url/1.png",
+                        forksCount = 50
+                    ), Repository(
+                        id = 2,
+                        name = "Repo 2",
+                        description = "Descrição teste 2",
+                        stars = 100,
+                        ownerName = "name 2",
+                        ownerAvatarUrl = "https://avatar.url/2.png",
+                        forksCount = 50
+                    )
+                )
+            ), repo
+        )
+    }
+
+    @Test
+    fun `test fetching repositories with error return error state`() = runTest {
+        val repository = FakeErrorGithubRepositoriesRepository()
+
+        val repo = launch(repository).repositories.value
+
+        assertEquals(ResultState.Error("Erro na api"), repo)
     }
 }
