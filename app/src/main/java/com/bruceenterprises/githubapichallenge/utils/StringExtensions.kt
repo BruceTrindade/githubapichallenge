@@ -12,7 +12,7 @@ fun String.formatToBrazilianDate(): String {
         "janeiro", "fevereiro", "março", "abril", "maio", "junho",
         "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
     )
-    val month = monthNames[localDate.monthNumber - 1] // `monthNumber` retorna 1-12
+    val month = monthNames[localDate.monthNumber - 1]
 
     return "${localDate.dayOfMonth} de $month de ${localDate.year}"
 }

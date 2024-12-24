@@ -36,8 +36,9 @@ class FirstFragment : Fragment() {
 
                             }
                             is ResultState.Success -> {
-                                val adapter = GithubRepositoriesAdapter(state.data) {
-                                    findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                                val adapter = GithubRepositoriesAdapter(state.data) { owner, repository ->
+                                    val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(owner, repository)
+                                    findNavController().navigate(action)
                                 }
                                 binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
                                 binding.recyclerView.adapter = adapter

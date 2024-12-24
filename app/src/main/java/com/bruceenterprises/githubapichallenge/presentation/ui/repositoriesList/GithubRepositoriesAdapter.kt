@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 
 class GithubRepositoriesAdapter(
     private val repositoryList: List<Repository>,
-    private val onClick: () -> Unit
+    private val onClick: (String, String) -> Unit
 ) :
     RecyclerView.Adapter<GithubRepositoriesAdapter.RepositoryViewHolder>() {
 
@@ -44,7 +44,10 @@ class GithubRepositoriesAdapter(
                 .error(R.drawable.github_repository_owner_icon)
                 .into(repositoryOwnerImage)
             itemContainer.setOnClickListener {
-                onClick()
+                onClick(
+                    repo.ownerName,
+                    repo.name
+                )
             }
         }
     }

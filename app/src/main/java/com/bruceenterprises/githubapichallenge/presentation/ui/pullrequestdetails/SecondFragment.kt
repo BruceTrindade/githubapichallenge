@@ -29,8 +29,9 @@ class SecondFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val args = SecondFragmentArgs.fromBundle(requireArguments())
         lifecycleScope.launch {
-            viewModel.fetchPullRequest("octocat", "Hello-World")
+            viewModel.fetchPullRequest(args.ownerRepository, args.repository)
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.repositories.collect { state ->
                     when (state) {
@@ -38,9 +39,7 @@ class SecondFragment : Fragment() {
 
                         }
                         is ResultState.Success -> {
-                            val adapter = GithubPullRequestAdapter(state.data) {
-                                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-                            }
+                            val adapter = GithubPullRequestAdapter(state.data)
                             binding.recyclerViewPR.layoutManager = LinearLayoutManager(requireContext())
                             binding.recyclerViewPR.adapter = adapter
                         }
