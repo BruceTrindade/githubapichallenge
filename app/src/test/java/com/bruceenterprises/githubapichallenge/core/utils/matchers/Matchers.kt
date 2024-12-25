@@ -11,6 +11,38 @@ import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 
+fun verifyPullRequestCard(
+    recyclerViewId: Int,
+    position: Int,
+    targetViewId: Int,
+    prTitle: String,
+    prTitleId: Int,
+    prOwnerId: Int,
+    prOwner: String,
+    prDescriptionId: Int,
+    prDescription: String,
+    dateId: Int,
+    date: String,
+) {
+
+    Espresso.onView(ViewMatchers.withId(recyclerViewId))
+        .perform(RecyclerViewActions.scrollToPosition<GithubRepositoriesAdapter.RepositoryViewHolder>(targetViewId))
+
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, prTitleId))
+        .check(ViewAssertions.matches(ViewMatchers.withText(prTitle)))
+
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, prOwnerId))
+        .check(ViewAssertions.matches(ViewMatchers.withText(prOwner)))
+
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, prDescriptionId))
+        .check(ViewAssertions.matches(ViewMatchers.withText(prDescription)))
+
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, dateId))
+        .check(ViewAssertions.matches(ViewMatchers.withText(date)))
+
+}
+
+
 fun verifyRepositoryCard(
     recyclerViewId: Int,
     position: Int,
@@ -30,16 +62,16 @@ fun verifyRepositoryCard(
     Espresso.onView(ViewMatchers.withId(recyclerViewId))
         .perform(RecyclerViewActions.scrollToPosition<GithubRepositoriesAdapter.RepositoryViewHolder>(targetViewId))
 
-    Espresso.onView(withRecyclerView(R.id.recyclerView).atPositionOnView(position, repoId))
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, repoId))
         .check(ViewAssertions.matches(ViewMatchers.withText(repoName)))
 
-    Espresso.onView(withRecyclerView(R.id.recyclerView).atPositionOnView(position, repoOwnerId))
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, repoOwnerId))
         .check(ViewAssertions.matches(ViewMatchers.withText(repoOwner)))
 
-    Espresso.onView(withRecyclerView(R.id.recyclerView).atPositionOnView(position, repoDescriptionId))
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, repoDescriptionId))
         .check(ViewAssertions.matches(ViewMatchers.withText(repoDescription)))
 
-    Espresso.onView(withRecyclerView(R.id.recyclerView).atPositionOnView(position, starsCountId))
+    Espresso.onView(withRecyclerView(recyclerViewId).atPositionOnView(position, starsCountId))
         .check(ViewAssertions.matches(ViewMatchers.withText(starsCount)))
 
     Espresso.onView(withRecyclerView(R.id.recyclerView).atPositionOnView(position, forksCountId))

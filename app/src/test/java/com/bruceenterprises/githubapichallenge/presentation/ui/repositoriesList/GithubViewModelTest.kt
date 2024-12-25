@@ -1,4 +1,4 @@
-package com.bruceenterprises.githubapichallenge.presentation
+package com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
@@ -7,7 +7,7 @@ import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositorie
 import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeErrorGithubRepositoriesRepository
 import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeGithubRepositoriesRepository
 import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.GithubViewModel
-import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.ResultState
+import com.bruceenterprises.githubapichallenge.utils.ResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher

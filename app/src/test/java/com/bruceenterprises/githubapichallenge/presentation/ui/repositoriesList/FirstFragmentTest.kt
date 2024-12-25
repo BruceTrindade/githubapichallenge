@@ -1,4 +1,4 @@
-package com.bruceenterprises.githubapichallenge.presentation.ui
+package com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,6 +14,7 @@ import com.bruceenterprises.githubapichallenge.core.base.BaseRobolectricTest
 import com.bruceenterprises.githubapichallenge.core.utils.launchFragmentInHiltContainer
 import com.bruceenterprises.githubapichallenge.core.utils.matchers.verifyRepositoryCard
 import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.FirstFragment
+import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.FirstFragmentDirections
 import com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList.GithubRepositoriesAdapter
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.mockk
@@ -43,12 +44,13 @@ class FirstFragmentTest : BaseRobolectricTest() {
 
     @Test
     fun testRepositoriesDisplayclick() {
-
         onView(withId(R.id.recyclerView))
             .perform(RecyclerViewActions.actionOnItemAtPosition<GithubRepositoriesAdapter.RepositoryViewHolder>(0, click()))
 
         verify {
-            mockNavController.navigate(R.id.action_FirstFragment_to_SecondFragment)
+            mockNavController.navigate(
+                FirstFragmentDirections.actionFirstFragmentToSecondFragment("name 1", "Repo 1")
+            )
         }
     }
 
