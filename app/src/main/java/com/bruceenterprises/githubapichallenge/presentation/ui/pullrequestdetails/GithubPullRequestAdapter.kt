@@ -1,9 +1,10 @@
 package com.bruceenterprises.githubapichallenge.presentation.ui.pullrequestdetails
 
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.PullrequestItemBinding
@@ -12,10 +13,8 @@ import com.bruceenterprises.githubapichallenge.utils.formatToBrazilianDate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class GithubPullRequestAdapter(
-    private val pullRequestList: List<PullRequest>,
-) :
-    RecyclerView.Adapter<GithubPullRequestAdapter.PullRequestViewHolder>() {
+class GithubPullRequestAdapter :
+    PagingDataAdapter<PullRequest, GithubPullRequestAdapter.PullRequestViewHolder>(DiffCallback) {
 
     class PullRequestViewHolder(val binding: PullrequestItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -24,32 +23,47 @@ class GithubPullRequestAdapter(
         val binding = PullrequestItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false,
+            false
         )
         return PullRequestViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PullRequestViewHolder, position: Int) {
-        val repo = pullRequestList[position]
+        val pullRequest = getItem(position)
 
-        with(holder.binding) {
-            prTitle.text = repo.title
-            prOwner.text = "por ${repo.authorName}"
-            if(repo.body.isNullOrBlank()) prDescription.visibility = View.GONE
-            else prDescription.text = repo.body
-            prDate.text = repo.createdAt.formatToBrazilianDate()
-            Glide.with(holder.itemView.context)
-                .load(repo.authorAvatarUrl)
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(R.drawable.github_repository_owner_icon)
-                .error(R.drawable.github_repository_owner_icon)
-                .into(prOwnerImage)
-            if(position == (pullRequestList.size - 1)) prDivider.visibility = View.GONE
+        pullRequest?.let { repo ->
+            with(holder.binding) {
+                prTitle.text = repo.title
+                prOwner.text = "por ${repo.authorName}"
+
+                if (repo.body.isNullOrBlank()) {
+                    prDescription.visibility = View.GONE
+                } else {
+                    prDescription.visibility = View.VISIBLE
+                    prDescription.text = repo.body
+                }
+
+                prDate.text = repo.createdAt.formatToBrazilianDate()
+
+                Glide.with(holder.itemView.context)
+                    .load(repo.authorAvatarUrl)
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(R.drawable.github_repository_owner_icon)
+                    .error(R.drawable.github_repository_owner_icon)
+                    .into(prOwnerImage)
+
+                prDivider.visibility = if (position == itemCount - 1) View.GONE else View.VISIBLE
+            }
         }
-
     }
 
-    override fun getItemCount(): Int {
-        return pullRequestList.size
+    object DiffCallback : DiffUtil.ItemCallback<PullRequest>() {
+        override fun areItemsTheSame(oldItem: PullRequest, newItem: PullRequest): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: PullRequest, newItem: PullRequest): Boolean {
+            return oldItem == newItem
+        }
     }
 }

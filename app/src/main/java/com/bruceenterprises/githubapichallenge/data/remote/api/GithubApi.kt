@@ -18,6 +18,9 @@ interface GithubApi {
     @GET("repos/{owner}/{repo}/pulls")
     suspend fun getPullRequests(
         @Path("owner") owner: String,
-        @Path("repo") repo: String
+        @Path("repo") repo: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): List<PullRequestDto>
+
 }

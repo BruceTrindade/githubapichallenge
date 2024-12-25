@@ -4,7 +4,7 @@ import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubPullRequestRepository
 
 class FakeGithubPullRequestRepository : GithubPullRequestRepository {
-    override suspend fun getPullRequest(owner: String, repo: String): List<PullRequest> {
+    override suspend fun getPullRequest(owner: String, repo: String): PagingSource<Int, PullRequest> {
         return listOf(
             PullRequest(
                 id = 1L,
@@ -51,7 +51,7 @@ class FakeGithubPullRequestRepository : GithubPullRequestRepository {
 }
 
 class FakeErrorGithubPullRequestRepository : GithubPullRequestRepository {
-    override suspend fun getPullRequest(owner: String, repo: String): List<PullRequest> {
+    override suspend fun getPullRequest(owner: String, repo: String): PagingSource<Int, PullRequest> {
         throw Exception("Erro na api")
     }
 }

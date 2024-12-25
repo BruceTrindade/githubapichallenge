@@ -2,12 +2,15 @@ package com.bruceenterprises.githubapichallenge.presentation.ui.pullrequestdetai
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetPullRequestUseCase
 import com.bruceenterprises.githubapichallenge.utils.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +24,7 @@ class GithubPullRequestViewModel @Inject constructor(private val getPullRequestU
     private val _repositories = MutableStateFlow<ResultState<List<PullRequest>>>(ResultState.Loading)
     val repositories: StateFlow<ResultState<List<PullRequest>>> get() = _repositories.asStateFlow()
 
+/*
     fun fetchPullRequest(owner: String, repo: String) {
         viewModelScope.launch {
             _repositories.value = ResultState.Loading
@@ -32,5 +36,11 @@ class GithubPullRequestViewModel @Inject constructor(private val getPullRequestU
                 ResultState.Error(e.message ?: "Erro desconhecido")
             }
         }
+    }
+*/
+
+    suspend fun getPagedPullRequests(owner: String, repo: String): Flow<PagingData<PullRequest>> {
+        return getPullRequestUseCase(owner, repo)
+            .cachedIn(viewModelScope)
     }
 }
