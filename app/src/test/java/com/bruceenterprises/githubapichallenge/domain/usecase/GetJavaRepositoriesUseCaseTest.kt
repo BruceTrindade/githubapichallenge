@@ -36,13 +36,13 @@ class GetJavaRepositoriesUseCaseTest {
                 ownerAvatarUrl = "https://avatar.url/2.png",
             ),
         )
-        coEvery { mockRepository.getRepositories() } returns mockRepositories
+        coEvery { mockRepository.getRepositories(page = 1, perPage = 30) } returns mockRepositories
 
-        val result = useCase.invoke()
+        val result = useCase.invoke(page = 1, perPage = 30)
 
         assertEquals(2, result.size)
         assertEquals("Repo 1", result[0].name)
         assertEquals(100, result[0].stars)
-        coVerify(exactly = 1) { mockRepository.getRepositories() }
+        coVerify(exactly = 1) { mockRepository.getRepositories(page = 1, perPage = 30) }
     }
 }

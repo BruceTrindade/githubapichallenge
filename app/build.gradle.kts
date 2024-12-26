@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.safeargs)
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
@@ -53,6 +54,13 @@ android {
 
 dependencies {
 
+    val paging_version = "3.3.2"
+
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    testImplementation("androidx.paging:paging-common-ktx:3.2.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
     // hilt
     implementation("com.google.dagger:hilt-android:2.47")
     implementation(libs.androidx.espresso.contrib)
@@ -75,7 +83,7 @@ dependencies {
 
 
     // Hilt Testing para testes de UI (instrumentados)
-    androidTestImplementation("androidx.hilt:hilt-testing:1.0.0")
+//    androidTestImplementation("androidx.hilt:hilt-testing:1.0.0")
 
     // Hilt para testes
 

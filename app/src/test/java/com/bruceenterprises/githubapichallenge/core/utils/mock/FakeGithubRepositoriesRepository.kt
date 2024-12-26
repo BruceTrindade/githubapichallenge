@@ -4,8 +4,8 @@ import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubRepositoriesRepository
 
 class FakeGithubRepositoriesRepository : GithubRepositoriesRepository {
-    override suspend fun getRepositories(): List<Repository> {
-        return listOf(
+    override suspend fun getRepositories(page: Int, perPage: Int): List<Repository> {
+        val fakeRepositories = listOf(
             Repository(
                 id = 1,
                 name = "Repo 1",
@@ -25,11 +25,6 @@ class FakeGithubRepositoriesRepository : GithubRepositoriesRepository {
                 ownerAvatarUrl = "https://avatar.url/2.png",
             ),
         )
-    }
-}
-
-class FakeErrorGithubRepositoriesRepository : GithubRepositoriesRepository {
-    override suspend fun getRepositories(): List<Repository> {
-        throw Exception("Erro na api")
+        return fakeRepositories
     }
 }

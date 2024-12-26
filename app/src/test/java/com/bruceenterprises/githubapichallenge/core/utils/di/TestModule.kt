@@ -1,9 +1,10 @@
 package com.bruceenterprises.githubapichallenge.core.utils.di
 
+import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeGithubPullRequestRepository
 import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeGithubRepositoriesRepository
 import com.bruceenterprises.githubapichallenge.di.RepositoryModule
+import com.bruceenterprises.githubapichallenge.domain.repository.GithubPullRequestRepository
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubRepositoriesRepository
-import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
@@ -22,7 +23,8 @@ object TestModule {
     }
 
     @Provides
-    fun provideGetJavaRepositoriesUseCase(repository: GithubRepositoriesRepository): GetJavaRepositoriesUseCase {
-        return GetJavaRepositoriesUseCase(repository)
+    fun provideGithubPullRequestRepository(): GithubPullRequestRepository {
+        return FakeGithubPullRequestRepository()
     }
+
 }

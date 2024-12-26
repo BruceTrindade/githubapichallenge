@@ -1,9 +1,9 @@
-package com.bruceenterprises.githubapichallenge.data.repository
 
 import com.bruceenterprises.githubapichallenge.data.remote.api.GithubApi
 import com.bruceenterprises.githubapichallenge.data.remote.dto.GithubResponse
 import com.bruceenterprises.githubapichallenge.data.remote.dto.OwnerDTO
 import com.bruceenterprises.githubapichallenge.data.remote.dto.RepositoryDto
+import com.bruceenterprises.githubapichallenge.data.repository.RepositoriesList.GithubRepositoriesRepositoryImpl
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -32,9 +32,9 @@ class GithubRepositoriesRepositoryImplTest {
             ),
         )
 
-        coEvery { mockApi.getJavaRepositories() } returns mockResponse
+        coEvery { mockApi.getJavaRepositories(page = 1, perPage = 30) } returns mockResponse
 
-        val result: List<Repository> = repository.getRepositories()
+        val result: List<Repository> = repository.getRepositories(page = 1, perPage = 30)
 
         assertEquals(1, result.size)
         assertEquals("Repo 1", result[0].name)
@@ -42,6 +42,6 @@ class GithubRepositoriesRepositoryImplTest {
         assertEquals(10, result[0].stars)
         assertEquals("owner1", result[0].ownerName)
 
-        coVerify { mockApi.getJavaRepositories() }
+        coVerify { mockApi.getJavaRepositories(page = 10, perPage = 30) }
     }
 }

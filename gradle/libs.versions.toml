@@ -35,4 +35,5 @@ androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version = "2.48" }
+safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "2.8.3" }
 
