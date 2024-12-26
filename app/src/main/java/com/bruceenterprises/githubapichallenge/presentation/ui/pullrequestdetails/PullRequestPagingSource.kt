@@ -1,9 +1,7 @@
-package com.bruceenterprises.githubapichallenge.data.repository.PullRequest
+package com.bruceenterprises.githubapichallenge.presentation.ui.pullrequestdetails
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.bruceenterprises.githubapichallenge.data.remote.api.GithubApi
-import com.bruceenterprises.githubapichallenge.data.remote.mapper.toDomain
 import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetPullRequestUseCase
 

@@ -68,8 +68,23 @@
         app:layout_constraintBottom_toBottomOf="@id/prOwnerImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/prDate"
+        app:layout_constraintStart_toEndOf="@id/prBy"
         tools:text="owner" />
+
+    <TextView
+        android:id="@+id/prBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="@string/by"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@+id/prOwnerImage"
+        app:layout_constraintBottom_toBottomOf="@id/prOwnerImage"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/prDate"
+        tools:text="por:" />
 
     <TextView
         android:id="@+id/prDate"

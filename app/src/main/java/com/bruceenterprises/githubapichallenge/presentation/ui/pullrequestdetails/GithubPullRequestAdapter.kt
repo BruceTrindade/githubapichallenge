@@ -1,5 +1,6 @@
 package com.bruceenterprises.githubapichallenge.presentation.ui.pullrequestdetails
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.bruceenterprises.githubapichallenge.utils.shortDescription
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class GithubPullRequestAdapter :
+class GithubPullRequestAdapter(private val context: Context) :
     PagingDataAdapter<PullRequest, GithubPullRequestAdapter.PullRequestViewHolder>(DiffCallback) {
 
     class PullRequestViewHolder(val binding: PullrequestItemBinding) :
@@ -34,9 +35,9 @@ class GithubPullRequestAdapter :
         with(holder.binding) {
             pullRequest?.let { repo ->
                 prTitle.text = repo.title
-                prTitle.contentDescription = "Título deo PR:${repo.title}"
+                prTitle.contentDescription = context.getString(R.string.title_pr) + repo.title
 
-                prOwner.text = "por ${repo.authorName}"
+                prOwner.text = repo.authorName
 
                 if (repo.body.isNullOrBlank()) {
                     prDescription.visibility = View.GONE
@@ -44,11 +45,13 @@ class GithubPullRequestAdapter :
 
                     prDescription.visibility = View.VISIBLE
                     prDescription.text = repo.body
-                    prDescription.contentDescription = "Descrição do PR: ${repo.body.shortDescription()}"
+                    prDescription.contentDescription =
+                        context.getString(R.string.description_pr) + repo.body.shortDescription()
                 }
 
                 prDate.text = repo.createdAt.formatToBrazilianDate()
-                prDate.contentDescription = "Criado em: ${repo.createdAt.formatToBrazilianDate() }"
+                prDate.contentDescription =
+                    context.getString(R.string.created_at) + repo.createdAt.formatToBrazilianDate()
 
                 Glide.with(holder.itemView.context)
                     .load(repo.authorAvatarUrl)

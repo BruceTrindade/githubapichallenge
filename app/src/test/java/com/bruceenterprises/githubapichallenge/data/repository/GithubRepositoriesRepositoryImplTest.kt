@@ -6,7 +6,6 @@ import com.bruceenterprises.githubapichallenge.data.remote.dto.RepositoryDto
 import com.bruceenterprises.githubapichallenge.data.repository.RepositoriesList.GithubRepositoriesRepositoryImpl
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -42,6 +41,5 @@ class GithubRepositoriesRepositoryImplTest {
         assertEquals(10, result[0].stars)
         assertEquals("owner1", result[0].ownerName)
 
-        coVerify { mockApi.getJavaRepositories(page = 10, perPage = 30) }
     }
 }

@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.FragmentSecondBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +29,7 @@ class PullRequestFragment : Fragment() {
 
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         adapter = GithubPullRequestAdapter()
+         adapter = GithubPullRequestAdapter(this.requireContext())
     }
 
     override fun onCreateView(
@@ -74,7 +75,7 @@ class PullRequestFragment : Fragment() {
     private fun repositoryInformation(ownerRepository: String, repository: String) {
         with(binding.repositoryInformations) {
             text = "${ownerRepository} / ${repository}"
-            contentDescription = "repositório: ${repository}, usuário: $ownerRepository"
+            contentDescription = "${context.getString(R.string.repository)} ${repository}, ${context.getString(R.string.user)} $ownerRepository"
         }
     }
 

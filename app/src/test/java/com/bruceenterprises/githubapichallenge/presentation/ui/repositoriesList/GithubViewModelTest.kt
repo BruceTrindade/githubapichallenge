@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingSource
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubRepositoriesRepository
 import com.bruceenterprises.githubapichallenge.core.utils.mock.FakeGithubRepositoriesRepository
-import com.bruceenterprises.githubapichallenge.data.repository.RepositoriesList.RepositoriesPagingSource
+import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher

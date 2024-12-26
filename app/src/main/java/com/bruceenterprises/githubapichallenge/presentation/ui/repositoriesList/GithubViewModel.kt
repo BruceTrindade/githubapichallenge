@@ -6,7 +6,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.bruceenterprises.githubapichallenge.data.repository.RepositoriesList.RepositoriesPagingSource
 import com.bruceenterprises.githubapichallenge.domain.models.Repository
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

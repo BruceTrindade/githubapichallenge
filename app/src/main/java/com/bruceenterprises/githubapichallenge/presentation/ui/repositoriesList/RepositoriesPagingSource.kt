@@ -1,4 +1,4 @@
-package com.bruceenterprises.githubapichallenge.data.repository.RepositoriesList
+package com.bruceenterprises.githubapichallenge.presentation.ui.repositoriesList
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

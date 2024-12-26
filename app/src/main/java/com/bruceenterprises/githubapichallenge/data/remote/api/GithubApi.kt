@@ -2,7 +2,6 @@ package com.bruceenterprises.githubapichallenge.data.remote.api
 
 import com.bruceenterprises.githubapichallenge.data.remote.dto.GithubResponse
 import com.bruceenterprises.githubapichallenge.data.remote.dto.PullRequestDto
-import com.bruceenterprises.githubapichallenge.data.remote.dto.PullRequestResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

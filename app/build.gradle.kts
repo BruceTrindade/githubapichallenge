@@ -81,13 +81,6 @@ dependencies {
     // ...with Java.
     androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.47")
 
-
-    // Hilt Testing para testes de UI (instrumentados)
-//    androidTestImplementation("androidx.hilt:hilt-testing:1.0.0")
-
-    // Hilt para testes
-
-
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 

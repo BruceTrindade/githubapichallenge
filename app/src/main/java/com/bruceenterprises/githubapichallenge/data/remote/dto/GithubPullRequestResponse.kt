@@ -2,10 +2,6 @@ package com.bruceenterprises.githubapichallenge.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class PullRequestResponse(
-    @SerializedName("items") val items: List<PullRequestDto>
-)
-
 data class PullRequestDto(
     val id: Long,
     val title: String,
