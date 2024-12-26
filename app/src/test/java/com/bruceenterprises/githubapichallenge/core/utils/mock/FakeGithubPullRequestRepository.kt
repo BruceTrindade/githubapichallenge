@@ -4,8 +4,8 @@ import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubPullRequestRepository
 
 class FakeGithubPullRequestRepository : GithubPullRequestRepository {
-    override suspend fun getPullRequest(owner: String, repo: String): PagingSource<Int, PullRequest> {
-        return listOf(
+    override suspend fun getPullRequest(owner: String, repo: String, page: Int, perPage: Int): List<PullRequest> {
+        val fakePullRequests = listOf(
             PullRequest(
                 id = 1L,
                 title = "pr title",
@@ -47,11 +47,6 @@ class FakeGithubPullRequestRepository : GithubPullRequestRepository {
                 authorAvatarUrl = "https://avatar.url/1.png",
             )
         )
-    }
-}
-
-class FakeErrorGithubPullRequestRepository : GithubPullRequestRepository {
-    override suspend fun getPullRequest(owner: String, repo: String): PagingSource<Int, PullRequest> {
-        throw Exception("Erro na api")
+        return fakePullRequests
     }
 }

@@ -1,8 +1,8 @@
 package com.bruceenterprises.githubapichallenge.di
 
 import com.bruceenterprises.githubapichallenge.data.remote.api.GithubApi
-import com.bruceenterprises.githubapichallenge.data.repository.GithubPullRequestRepositoryImpl
-import com.bruceenterprises.githubapichallenge.data.repository.GithubRepositoriesRepositoryImpl
+import com.bruceenterprises.githubapichallenge.data.repository.PullRequest.GithubPullRequestRepositoryImpl
+import com.bruceenterprises.githubapichallenge.data.repository.RepositoriesList.GithubRepositoriesRepositoryImpl
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubPullRequestRepository
 import com.bruceenterprises.githubapichallenge.domain.repository.GithubRepositoriesRepository
 import dagger.Module

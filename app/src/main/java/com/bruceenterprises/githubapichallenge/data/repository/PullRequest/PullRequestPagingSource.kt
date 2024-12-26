@@ -1,13 +1,14 @@
-package com.bruceenterprises.githubapichallenge.data.repository
+package com.bruceenterprises.githubapichallenge.data.repository.PullRequest
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.bruceenterprises.githubapichallenge.data.remote.api.GithubApi
 import com.bruceenterprises.githubapichallenge.data.remote.mapper.toDomain
 import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
+import com.bruceenterprises.githubapichallenge.domain.usecase.GetPullRequestUseCase
 
 class PullRequestsPagingSource(
-    private val api: GithubApi,
+    private val useCase: GetPullRequestUseCase,
     private val owner: String,
     private val repo: String
 ) : PagingSource<Int, PullRequest>() {
@@ -17,11 +18,11 @@ class PullRequestsPagingSource(
         val perPage = params.loadSize
 
         return try {
-            val response = api.getPullRequests(owner, repo, page, perPage) // Busca os dados
+            val response = useCase(owner, repo, page, perPage)
             LoadResult.Page(
-                data = response.map { it.toDomain() },
-                prevKey = if (page == 1) null else page - 1,
-                nextKey = if (response.isEmpty()) null else page + 1
+                data = response,
+                prevKey = null,
+                nextKey = if (response.size < perPage) null else page + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

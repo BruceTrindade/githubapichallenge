@@ -2,45 +2,43 @@ package com.bruceenterprises.githubapichallenge.presentation.ui.pullrequestdetai
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.bruceenterprises.githubapichallenge.data.repository.PullRequest.PullRequestsPagingSource
 import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
-import com.bruceenterprises.githubapichallenge.domain.models.Repository
-import com.bruceenterprises.githubapichallenge.domain.usecase.GetJavaRepositoriesUseCase
 import com.bruceenterprises.githubapichallenge.domain.usecase.GetPullRequestUseCase
-import com.bruceenterprises.githubapichallenge.utils.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GithubPullRequestViewModel @Inject constructor(private val getPullRequestUseCase: GetPullRequestUseCase) :
-    ViewModel() {
+class GithubPullRequestViewModel @Inject constructor(
+    private val getPullRequestUseCase: GetPullRequestUseCase
+) : ViewModel() {
 
-    private val _repositories = MutableStateFlow<ResultState<List<PullRequest>>>(ResultState.Loading)
-    val repositories: StateFlow<ResultState<List<PullRequest>>> get() = _repositories.asStateFlow()
+    lateinit var pullRequests: Flow<PagingData<PullRequest>>
 
-/*
-    fun fetchPullRequest(owner: String, repo: String) {
-        viewModelScope.launch {
-            _repositories.value = ResultState.Loading
-
-            _repositories.value = try {
-                val repos = getPullRequestUseCase(owner, repo)
-                ResultState.Success(repos)
-            } catch (e: Exception) {
-                ResultState.Error(e.message ?: "Erro desconhecido")
+    private fun configPaging(owner: String, repo: String): Flow<PagingData<PullRequest>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 30,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = {
+                PullRequestsPagingSource(
+                    owner = owner,
+                    repo = repo,
+                    useCase = getPullRequestUseCase
+                )
             }
-        }
+        ).flow
     }
-*/
 
-    suspend fun getPagedPullRequests(owner: String, repo: String): Flow<PagingData<PullRequest>> {
-        return getPullRequestUseCase(owner, repo)
+
+    fun fetchPullRequests(owner: String, repo: String) {
+        pullRequests = configPaging(owner, repo)
             .cachedIn(viewModelScope)
     }
 }

@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.Test
@@ -20,7 +21,7 @@ import org.junit.Before
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
-class PullRequestDetailsFragmentTest : BaseRobolectricTest() {
+class PullRequestFragmentTest : BaseRobolectricTest() {
 
     private lateinit var mockNavController: NavController
 
@@ -33,18 +34,18 @@ class PullRequestDetailsFragmentTest : BaseRobolectricTest() {
             "repository" to "Repo 1"
         )
 
-        launchFragmentInHiltContainer<SecondFragment>(fragmentArgs = args) {
+        launchFragmentInHiltContainer<PullRequestFragment>(fragmentArgs = args) {
             Navigation.setViewNavController(this.requireView(), mockNavController)
         }
     }
 
     @Test
-    fun testRepositoriesDisplay() {
+    fun `recycler view pull request should be displayed`() {
         onView(withId(R.id.recyclerViewPR)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testRecyclerViewItemPosition() {
+    fun `when fragment is opened pull request list should be displayed`() {
         verifyPullRequestCard(
             recyclerViewId = R.id.recyclerViewPR,
             position = 1,
@@ -59,4 +60,12 @@ class PullRequestDetailsFragmentTest : BaseRobolectricTest() {
             date = "2024-12-01T10:00:00Z".formatToBrazilianDate(),
         )
     }
+
+    @Test
+    fun `pull request owner and repository should be displayed`() {
+        onView(withId(R.id.repositoryInformations))
+            .check(matches(ViewMatchers.withText("name 1 / Repo 1")))
+            .check(matches(isDisplayed()))
+    }
+
 }

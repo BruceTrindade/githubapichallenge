@@ -10,44 +10,31 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bruceenterprises.githubapichallenge.databinding.FragmentFirstBinding
-import com.bruceenterprises.githubapichallenge.utils.ResultState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FirstFragment : Fragment() {
+class RepositoriesFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: GithubViewModel by activityViewModels()
+    private lateinit var adapter: GithubRepositoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launch {
-            viewModel.fetchRepositories()
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.repositories.collect { state ->
-                        when (state) {
-                            is ResultState.Loading -> {
-
-                            }
-                            is ResultState.Success -> {
-                                val adapter = GithubRepositoriesAdapter(state.data) { owner, repository ->
-                                    val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(owner, repository)
-                                    findNavController().navigate(action)
-                                }
-                                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                                binding.recyclerView.adapter = adapter
-                            }
-                            is ResultState.Error -> {
-                            }
-                        }
-                }
-
-            }
+        adapter = GithubRepositoriesAdapter { owner, repository ->
+            val action =
+                RepositoriesFragmentDirections.actionFirstFragmentToSecondFragment(
+                    owner,
+                    repository
+                )
+            findNavController().navigate(action)
         }
     }
 
@@ -62,6 +49,29 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.fetchRepositories()
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                adapter.loadStateFlow.collectLatest { loadStates ->
+                    val isLoading = loadStates.refresh is LoadState.Loading
+                    if (!isLoading) binding.load.visibility = View.GONE
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.repositories.collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
+            }
+        }
+
     }
 
     override fun onDestroyView() {

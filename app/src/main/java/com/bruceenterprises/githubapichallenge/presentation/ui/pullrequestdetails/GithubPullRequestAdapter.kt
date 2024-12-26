@@ -10,6 +10,7 @@ import com.bruceenterprises.githubapichallenge.R
 import com.bruceenterprises.githubapichallenge.databinding.PullrequestItemBinding
 import com.bruceenterprises.githubapichallenge.domain.models.PullRequest
 import com.bruceenterprises.githubapichallenge.utils.formatToBrazilianDate
+import com.bruceenterprises.githubapichallenge.utils.shortDescription
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -30,20 +31,24 @@ class GithubPullRequestAdapter :
 
     override fun onBindViewHolder(holder: PullRequestViewHolder, position: Int) {
         val pullRequest = getItem(position)
-
-        pullRequest?.let { repo ->
-            with(holder.binding) {
+        with(holder.binding) {
+            pullRequest?.let { repo ->
                 prTitle.text = repo.title
+                prTitle.contentDescription = "Título deo PR:${repo.title}"
+
                 prOwner.text = "por ${repo.authorName}"
 
                 if (repo.body.isNullOrBlank()) {
                     prDescription.visibility = View.GONE
                 } else {
+
                     prDescription.visibility = View.VISIBLE
                     prDescription.text = repo.body
+                    prDescription.contentDescription = "Descrição do PR: ${repo.body.shortDescription()}"
                 }
 
                 prDate.text = repo.createdAt.formatToBrazilianDate()
+                prDate.contentDescription = "Criado em: ${repo.createdAt.formatToBrazilianDate() }"
 
                 Glide.with(holder.itemView.context)
                     .load(repo.authorAvatarUrl)
@@ -53,7 +58,7 @@ class GithubPullRequestAdapter :
                     .into(prOwnerImage)
 
                 prDivider.visibility = if (position == itemCount - 1) View.GONE else View.VISIBLE
-            }
+            } ?: { itemContainer.visibility = View.GONE }
         }
     }
 

@@ -42,6 +42,7 @@
         android:textSize="14sp"
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/repoDivider"
         app:layout_constraintTop_toBottomOf="@+id/repositoryOwnerImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -88,5 +89,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="forks" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/repoDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repoOwner"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

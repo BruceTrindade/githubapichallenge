@@ -57,9 +57,7 @@ dependencies {
     val paging_version = "3.3.2"
 
     implementation("androidx.paging:paging-runtime:$paging_version")
-
-    // alternatively - without Android dependencies for tests
-    testImplementation("androidx.paging:paging-common:$paging_version")
+    testImplementation("androidx.paging:paging-common-ktx:3.2.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
@@ -85,7 +83,7 @@ dependencies {
 
 
     // Hilt Testing para testes de UI (instrumentados)
-    androidTestImplementation("androidx.hilt:hilt-testing:1.0.0")
+//    androidTestImplementation("androidx.hilt:hilt-testing:1.0.0")
 
     // Hilt para testes
 

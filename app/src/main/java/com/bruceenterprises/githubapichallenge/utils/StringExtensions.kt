@@ -27,3 +27,12 @@ fun String.formatToBrazilianDate(): String {
 
     return "${localDate.dayOfMonth} de $month de ${localDate.year}"
 }
+
+fun String.shortDescription(): String {
+    val maxLength = 100
+    return if (this.length > maxLength) {
+        this.substring(0, maxLength) + "..."
+    } else {
+        this
+    }
+}

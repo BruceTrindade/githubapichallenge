@@ -13,6 +13,8 @@ interface GithubApi {
         @Query("q") query: String = "language:java",
         @Query("sort") sort: String = "stars",
         @Query("order") order: String = "desc",
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): GithubResponse
 
     @GET("repos/{owner}/{repo}/pulls")
